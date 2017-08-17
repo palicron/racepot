@@ -18,6 +18,7 @@ public class control : MonoBehaviour {
     [SerializeField] private float vel;
     [SerializeField] private float velT;
     [SerializeField] private bool grounded;
+    public GameObject particols;
     private Collider[] grc;
     private bool acel;
     private bool jump;
@@ -38,6 +39,7 @@ public class control : MonoBehaviour {
         jump = false;
         turn = 0;
         bturn = false;
+    
     }
 	
 	// Update is called once per frame
@@ -63,6 +65,11 @@ public class control : MonoBehaviour {
             {
                 rb.AddForce(Vector3.forward * -Acceleration, Accelforce);
             }
+            particols.SetActive(true);
+        }
+        else
+        {
+            particols.SetActive(false);
         }
         if (Input.GetKeyDown("x") && grounded)
         {
@@ -75,13 +82,13 @@ public class control : MonoBehaviour {
             {
                turn = 1;
                // trans.Rotate(new Vector3(0,0,1) * -10* Time.deltaTime);
-                trans.position += Vector3.right * -topturnspeed * Time.deltaTime;
+                trans.position += Vector3.right * ((-Turnspeed - (vel*0.1f) ) * Time.deltaTime);
             }
             else if (Input.GetAxis("Horizontal") < 0)
             {
                 turn = -1;
              //   trans.Rotate(new Vector3(0, 0, 1) * 10 * Time.deltaTime);
-                trans.position += Vector3.right * topturnspeed * Time.deltaTime;
+                trans.position += Vector3.right * ((Turnspeed + (vel * 0.1f) )*  Time.deltaTime);
             }
         }
 
