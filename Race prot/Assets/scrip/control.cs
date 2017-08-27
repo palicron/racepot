@@ -25,7 +25,7 @@ public class control : MonoBehaviour {
     private bool bturn;
     private int turn;
     public LayerMask whatisground;
-
+    private bool can;
     private void Awake()
     {
         alive = true;
@@ -39,7 +39,9 @@ public class control : MonoBehaviour {
         jump = false;
         turn = 0;
         bturn = false;
-    
+        can = true;
+
+
     }
 	
 	// Update is called once per frame
@@ -71,7 +73,7 @@ public class control : MonoBehaviour {
         {
             particols.SetActive(false);
         }
-        if (Input.GetKeyDown("x") && grounded)
+        if (Input.GetKeyDown("x") && grounded && can)
         {
             rb.AddForce(Vector3.up * 10, jumpforce);
         }
@@ -103,7 +105,14 @@ public class control : MonoBehaviour {
             grounded = true;
         }
     }
-
+    public void forceacelaration()
+    {
+        if (vel < topspeed)
+        {
+            rb.AddForce(Vector3.forward * -Acceleration, Accelforce);
+        }
+        particols.SetActive(true);
+    }
 
     //Getter and setters
 
@@ -126,5 +135,9 @@ public class control : MonoBehaviour {
     public float Getacceleration()
     {
         return Acceleration;
+    }
+    public void setgrounded(bool b)
+    {
+        can = b;
     }
 }
